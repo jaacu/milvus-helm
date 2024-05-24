@@ -479,6 +479,13 @@ attu:
     #  - secretName: chart-attu-tls
     #    hosts:
     #      - milvus-attu.local
+  ## Array with extra environment variables to add to Attu deployment
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
 
 
 ## Configuration values for the minio dependency

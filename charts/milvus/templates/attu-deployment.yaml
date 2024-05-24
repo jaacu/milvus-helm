@@ -39,6 +39,12 @@ spec:
           protocol: TCP
         env:
 {{ include "milvus.attu.env" . | indent 8}}
+        {{- if .Values.attu.extraEnvVars }}
+        {{- range .Values.attu.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
         resources:
           {{- toYaml .Values.attu.resources | nindent 10 }}
     {{- if and (.Values.affinity) (not .Values.attu.affinity) }}

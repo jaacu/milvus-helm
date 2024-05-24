@@ -39,6 +39,25 @@ spec:
           protocol: TCP
         env:
 {{ include "milvus.attu.env" . | indent 8}}
+        {{- if .Values.attu.extraEnvVars }}
+        {{- range .Values.attu.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.attu.volumeMounts }}
+        {{- range .Values.attu.volumeMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .mountPath }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+          {{- if .readOnly }}
+          readOnly: {{ .readOnly }}
+          {{- end }}
+        {{- end }}
+        {{- end }}
         resources:
           {{- toYaml .Values.attu.resources | nindent 10 }}
     {{- if and (.Values.affinity) (not .Values.attu.affinity) }}
@@ -65,4 +84,14 @@ spec:
       nodeSelector:
    {{ toYaml .Values.attu.nodeSelector | indent 8 }}
    {{- end }}
+      volumes:
+    {{- if .Values.attu.volumes }}
+    {{- range .Values.attu.volumes }}
+      - name: {{ .name }}
+        {{- if .secret }}
+        secret:
+          secretName: {{ .secret.secretName }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
 {{- end }}

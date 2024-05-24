@@ -479,6 +479,25 @@ attu:
     #  - secretName: chart-attu-tls
     #    hosts:
     #      - milvus-attu.local
+  ## Array with extra environment variables to add to Attu deployment
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+  ## Array with extra volume mounts to add to Attu deployment
+  ## e.g:
+  ## - name: my-secret-volume
+  ##   secret:
+  ##   secretName: my-secret
+  volumes: []
+  ## e.g: 
+  ## volumeMounts:
+  ## - name: my-secret-volume
+  ##   mountPath: /etc/my-secret
+  ##   readOnly: true
+  volumeMounts: [] 
 
 
 ## Configuration values for the minio dependency
